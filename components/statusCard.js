@@ -19,15 +19,16 @@ export default function StatusCard({ listData, listCards }) {
         setModalToggle(!modalToggle)
     }
 
-    useEffect(async () => {
-        const response = await console.log('asdasd')
-    }, [])
+    // useEffect(async () => {
+    //     const response = await console.log('asdasd')
+    // }, [])
+    
     return (
         <Col md={3} style={{ border: '1px solid red' }}>
             <h2> {listData.name} </h2>
             <ul>
                 {
-                    listCards.map(map => <li>{map.name}</li>)
+                    listCards.map(card => <li key={card.id}>{card.name}</li>)
                 }
             </ul>
             <Row>

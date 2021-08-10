@@ -1,15 +1,12 @@
 import Layout from '../components/layout'
 import Head from 'next/head'
 
-import mockData from '../components/mockData';
 import StatusCard from '../components/statusCard';
 import { useEffect } from 'react'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { useRouter } from 'next/router';
-import router from 'next/router'
 
 const TRELLO_KEY = process.env.TRELLO_KEY
 const TRELLO_TOKEN = process.env.TRELLO_TOKEN
@@ -20,7 +17,7 @@ export async function getStaticPaths() {
     const response = await fetch(`https://api.trello.com/1/members/me/boards?fields=name,url&key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
     const json = await response.json()
 
-    console.log("aasdasd", json)
+    // console.log("aasdasd", json)
 
     const paths = json.map(data => {
         return {
@@ -50,7 +47,7 @@ export async function getStaticProps({ params }) {
         cardListsArr.push(cardLists)
     }
 
-    console.log(boardLists);
+    // console.log(boardLists);
     return {
         props: {
             board,
@@ -84,9 +81,7 @@ export default function Project({ board, boardLists, cardListsArr }) {
                     <Row>
                         {
                             boardLists.map((listData, index) => (
-                                <>
                                     <StatusCard key={listData.id} listData={listData} listCards={cardListsArr[index]} />
-                                </>
                             ))
                         }
                     </Row>

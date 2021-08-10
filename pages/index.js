@@ -44,13 +44,13 @@ export default function Home({ isConnected, json }) {
       </Head>
 
       {isConnected ? (
-          <h2 className="subtitle">You are connected to MongoDB</h2>
-        ) : (
-          <h2 className="subtitle">
-            You are NOT connected to MongoDB. Check the <code>README.md</code>{' '}
-            for instructions.
-          </h2>
-        )}
+        <h2 className="subtitle">You are connected to MongoDB</h2>
+      ) : (
+        <h2 className="subtitle">
+          You are NOT connected to MongoDB. Check the <code>README.md</code>{' '}
+          for instructions.
+        </h2>
+      )}
 
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Projects Listing</h2>
@@ -58,13 +58,13 @@ export default function Home({ isConnected, json }) {
           {
             allProjData.map(({ id, name }) => (
               <li key={id}>
-              <Link href={`/${id}`}>
-                <a>{name}</a>
-              </Link>
-              <br/>
-              <small className={utilStyles.lightText}>
-                {/* <p> {summary} </p> */}
-              </small>
+                <Link href={`/${id}`}>
+                  <a>{name}</a>
+                </Link>
+                <br />
+                <small className={utilStyles.lightText}>
+                  {/* <p> {summary} </p> */}
+                </small>
               </li>
             ))
           }
