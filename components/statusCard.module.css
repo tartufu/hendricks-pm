@@ -1,0 +1,9 @@
+.addCardModal {
+    max-width: 960px;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: aliceblue;
+    color: blue;
+    border: 1px solid red;
+    margin: 25% auto;
+}

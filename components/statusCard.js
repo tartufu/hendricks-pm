@@ -1,6 +1,13 @@
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import { useState, useEffect } from 'react'
+import styles from './statusCard.module.css'
+
+import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
+
+import AddCardModal from './addCardModal';
+
 
 export default function StatusCard({ listData, listCards }) {
 
@@ -8,8 +15,8 @@ export default function StatusCard({ listData, listCards }) {
 
     const [modalToggle, setModalToggle] = useState(false)
 
-    const handleOpen = () => {
-        alert("PING")
+    const modalToggleHandler = () => {
+        setModalToggle(!modalToggle)
     }
 
     useEffect(async () => {
@@ -24,12 +31,17 @@ export default function StatusCard({ listData, listCards }) {
                 }
             </ul>
             <Row>
-                <Col style={{ textAlign: 'center'}}>
-                    <button type="button" onClick={handleOpen} style={{ margin: '0 auto' }}>
+                <Col style={{ textAlign: 'center' }}>
+                    <Button variant="contained" color="primary" onClick={modalToggleHandler}>
                         Add New Card
-                    </button>
+                    </Button>
                 </Col>
             </Row>
+
+            {
+                modalToggle &&
+                <AddCardModal modalToggle={modalToggle} modalToggleHandler={modalToggleHandler} listId={listData.id}/>
+            }
         </Col>
     )
 }
