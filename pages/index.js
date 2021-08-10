@@ -4,30 +4,36 @@ import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
 
 import mockData from '../components/mockData'
-// import { connectToDatabase } from '../lib/mongodb'
+import { useEffect, useState } from 'react'
+import { connectToDatabase } from '../lib/mongodb'
 
 
 // https://stackoverflow.com/questions/64739543/modulenotfounderror-module-not-found-error-cant-resolve-dns-in-node-modul
-// export async function getServerSideProps(context) {
-//   const { client } = await connectToDatabase()
+export async function getServerSideProps(context) {
+  const { client } = await connectToDatabase()
 
-//   const isConnected = await client.isConnected()
+  const isConnected = await client.isConnected()
 
-//   return {
-//     props: { isConnected },
-//   }
-// }
-
-
-export async function getStaticProps() {
   return {
-    props: {
-      allProjData: mockData
-    }
+    props: { isConnected },
   }
 }
 
-export default function Home({ allPostsData, allProjData, isConnected }) {
+
+// export async function getStaticProps() {
+//   return {
+//     props: {
+//       allProjData: mockData
+//     }
+//   }
+// }
+
+export default function Home({ isConnected }) {
+
+  const [allProjData, setAllProjData] = useState(mockData)
+  // useEffect(() => {
+
+  // }, [])
   return (
     <Layout home>
       {/* Keep the existing code here */}
@@ -35,14 +41,14 @@ export default function Home({ allPostsData, allProjData, isConnected }) {
         <title> Hendricks Project Management </title>
       </Head>
 
-      {/* {isConnected ? (
+      {isConnected ? (
           <h2 className="subtitle">You are connected to MongoDB</h2>
         ) : (
           <h2 className="subtitle">
             You are NOT connected to MongoDB. Check the <code>README.md</code>{' '}
             for instructions.
           </h2>
-        )} */}
+        )}
 
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Projects Listing</h2>
