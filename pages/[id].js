@@ -5,7 +5,7 @@ import mockData from '../components/mockData';
 import StatusCard from '../components/statusCard';
 import { useEffect } from 'react'
 
-import Container from 'react-bootstrap/Container' 
+import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { useRouter } from 'next/router';
@@ -15,18 +15,14 @@ const TRELLO_KEY = process.env.TRELLO_KEY
 const TRELLO_TOKEN = process.env.TRELLO_TOKEN
 
 export async function getStaticPaths() {
-    // const paths = getAllPostIds()
     // https://nextjs.org/learn/basics/dynamic-routes/implement-getstaticpaths
 
     const response = await fetch(`https://api.trello.com/1/members/me/boards?fields=name,url&key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
-
-
-    // https://api.trello.com/1/members/me/boards?fields=name,url&key={apiKey}&token={apiToken}
     const json = await response.json()
 
     console.log("aasdasd", json)
 
-    const paths = json.map( data => {
+    const paths = json.map(data => {
         return {
             params: {
                 id: data.id
@@ -36,69 +32,65 @@ export async function getStaticPaths() {
 
     console.log(paths)
     return {
-      paths,
-      fallback: false
+        paths,
+        fallback: false
     }
-  }
+}
 
 export async function getStaticProps({ params }) {
 
-    console.log(params.id)
+    // console.log(params.id)
+    const board = await (await fetch(`https://api.trello.com/1/boards/${params.id}/?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)).json()
+    const boardLists = await (await fetch(`https://api.trello.com/1/boards/${params.id}/lists?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)).json()
 
-    // const { asPath, pathname } = useRouter();
-    // console.log(asPath); // '/blog/xyz'
-    // console.log(pathname); // '/blog/[slug]'
+    let cardListsArr = [];
 
-    // let boardIndex = params.findIndex( x => x.id )
+    for (let i = 0; i < boardLists.length; i++) {
+        const cardLists = await (await fetch(`https://api.trello.com/1/lists/${boardLists[i].id}/cards?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)).json()
+        cardListsArr.push(cardLists)
+    }
 
-    // https://api.trello.com/1/members/me/boards?fields=name,url&key={apiKey}&token={apiToken}
-
-    // https://api.trello.com/1/boards/{id}?key=0471642aefef5fa1fa76530ce1ba4c85&token=9eb76d9a9d02b8dd40c2f3e5df18556c831d4d1fadbe2c45f8310e6c93b5c548
-
-    const response = await fetch(`https://api.trello.com/1/boards/${params.id}/lists?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
-    const json = await response.json()
-
-    console.log(response)
-    // curl 'https://api.trello.com/1/boards/{idBoard}?key={yourKey}&token={yourToken}'
-    // let projData = mockData.filter( data => data.projectId.toString() === params.projectId)
-    // let projIndex = mockData.findIndex( x => x.id.toString() === params.projectId);
-    // let projData = mockData[projIndex]
-    // console.log("XCZXCX", params, mockData, projData)
+    console.log(boardLists);
     return {
         props: {
-            json
+            board,
+            boardLists,
+            cardListsArr
         }
     }
 
 }
 
 
-export default function Project({ projData, test, json }) {
+export default function Project({ board, boardLists, cardListsArr }) {
 
     useEffect(() => {
         // alert("PING")
-        console.log("asdasds", mockData, projData, test, json)
+        // console.log("asdasds", mockData, projData, test, json)
     }, [])
-    
+
     return (
         <Layout>
             <Head>
-                <title> {json.name} </title>
+                <title> {board.name} </title>
             </Head>
             <main>
-                <h1> {json.name} </h1>
-                {/* <h2> {projData.summary} </h2> */}
-                    <Container fluid>
-                        <Row>
-                            <StatusCard />
-                            <StatusCard />
-                            <StatusCard />
-                            <StatusCard />
-                        </Row>
-                    </Container>
-                    {
-                        json.map( x => <p> {x.name}</p>)
-                    }
+                <h1> {board.name} </h1>
+                {
+                    boardLists.length === 0 &&
+                    <p> there are no columns </p>
+                }
+                <Container fluid>
+                    <Row>
+                        {
+                            boardLists.map((listData, index) => (
+                                <>
+                                    <StatusCard key={listData.id} listData={listData} listCards={cardListsArr[index]} />
+                                </>
+                            ))
+                        }
+                    </Row>
+                </Container>
             </main>
 
         </Layout>
