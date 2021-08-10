@@ -11,11 +11,15 @@ import { connectToDatabase } from '../lib/mongodb'
 // https://stackoverflow.com/questions/64739543/modulenotfounderror-module-not-found-error-cant-resolve-dns-in-node-modul
 export async function getServerSideProps(context) {
   const { client } = await connectToDatabase()
-
   const isConnected = await client.isConnected()
 
+  const TRELLO_KEY = process.env.TRELLO_KEY
+  const TRELLO_TOKEN = process.env.TRELLO_TOKEN
+  const response = await fetch(`https://api.trello.com/1/members/me/boards?fields=name,url&key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
+  const json = await response.json()
+
   return {
-    props: { isConnected },
+    props: { isConnected, json },
   }
 }
 
@@ -28,12 +32,10 @@ export async function getServerSideProps(context) {
 //   }
 // }
 
-export default function Home({ isConnected }) {
+export default function Home({ isConnected, json }) {
 
-  const [allProjData, setAllProjData] = useState(mockData)
-  // useEffect(() => {
+  const [allProjData, setAllProjData] = useState(json)
 
-  // }, [])
   return (
     <Layout home>
       {/* Keep the existing code here */}
@@ -54,14 +56,14 @@ export default function Home({ isConnected }) {
         <h2 className={utilStyles.headingLg}>Projects Listing</h2>
         <ul className={utilStyles.list}>
           {
-            allProjData.map(({ id, projectId, title, summary }) => (
-              <li>
-              <Link href={`${projectId}`}>
-                <a>{title}</a>
+            allProjData.map(({ id, name }) => (
+              <li key={id}>
+              <Link href={`/${id}`}>
+                <a>{name}</a>
               </Link>
               <br/>
               <small className={utilStyles.lightText}>
-                <p> {summary} </p>
+                {/* <p> {summary} </p> */}
               </small>
               </li>
             ))
