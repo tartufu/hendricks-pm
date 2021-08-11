@@ -87,7 +87,9 @@ export default function Project({ board, boardLists, cardListsArr }) {
                                     <StatusCard 
                                         key={listData.id} 
                                         listData={listData} 
-                                        listCards={cardListsArr[index]} 
+                                        listCards={cardListsArrData[index]} 
+                                        boardListsData={boardListsData}
+                                        listIndex={index}
                                     />
                             ))
                         }

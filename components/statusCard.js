@@ -10,7 +10,7 @@ import AddCardModal from './addCardModal';
 import SingleCard from './singleCard';
 
 
-export default function StatusCard({ listData, listCards }) {
+export default function StatusCard({ listData, listCards, boardListsData, listIndex, updateListsHandler }) {
 
     const [cardsData, setCardsData] = useState(listCards);
 
@@ -33,7 +33,7 @@ export default function StatusCard({ listData, listCards }) {
             <div className={styles.statusCardDiv}>
             <h2> {listData.name} </h2>
             {
-                cardsData.map(card => <SingleCard card={card}/>)
+                cardsData.map(card => <SingleCard key={card.id} card={card} boardListsData={boardListsData} listIndex={listIndex} updateListsHandler={updateListsHandler}/>)
             }
             <Row>
                 <Col style={{ textAlign: 'center' }}>
