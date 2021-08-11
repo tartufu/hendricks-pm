@@ -3,7 +3,6 @@ import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
 
-import mockData from '../components/mockData'
 import { useEffect, useState } from 'react'
 import { connectToDatabase } from '../lib/mongodb'
 

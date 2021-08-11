@@ -1,0 +1,17 @@
+.singleCardDiv {
+    background-color: whitesmoke;
+    border-radius: 0.5rem;
+}
+
+.singleCard > p {
+    padding: 0.5rem;
+    word-wrap:break-word
+}
+
+.singleCard {
+    cursor: pointer;
+}
+
+/* .singleCard {
+    border: 1px solid red;
+} */

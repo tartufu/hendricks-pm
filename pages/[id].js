@@ -75,7 +75,7 @@ export default function Project({ board, boardLists, cardListsArr }) {
                 <title> {board.name} </title>
             </Head>
             <main>
-                <h1> {board.name} </h1>
+                <h1 style={{ textAlign: 'center' }}> {board.name} </h1>
                 {
                     boardLists.length === 0 &&
                     <p> there are no columns </p>

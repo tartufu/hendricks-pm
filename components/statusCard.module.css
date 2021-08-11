@@ -7,3 +7,11 @@
     border: 1px solid red;
     margin: 25% auto;
 }
+
+
+.statusCardDiv {
+    padding: 1rem;
+    background-color: lightgrey;
+    border: 1px solid black;
+    border-radius: 8px;
+}
