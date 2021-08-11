@@ -45,8 +45,17 @@ export default function AddCardModal({ modalToggle, modalToggleHandler, listId, 
             newCardDetailRes = text;
         }).catch(err => console.log(err))
 
-        console.log(">>>", newCardDetailRes)
+        // console.log(">>>", newCardDetailRes)
         updateListCardsHandler(newCardDetailRes)
+
+        const test = await fetch("/api/cards", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify(newCardDetailRes)
+        });
 
     }
 
