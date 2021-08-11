@@ -15,6 +15,7 @@ export async function getServerSideProps(context) {
 
   const TRELLO_KEY = process.env.TRELLO_KEY
   const TRELLO_TOKEN = process.env.TRELLO_TOKEN
+
   const response = await fetch(`https://api.trello.com/1/members/me/boards?fields=name,url&key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
   const json = await response.json()
 

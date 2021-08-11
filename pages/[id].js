@@ -2,7 +2,7 @@ import Layout from '../components/layout'
 import Head from 'next/head'
 
 import StatusCard from '../components/statusCard';
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -10,6 +10,9 @@ import Col from 'react-bootstrap/Col'
 
 const TRELLO_KEY = process.env.TRELLO_KEY
 const TRELLO_TOKEN = process.env.TRELLO_TOKEN
+
+const NEXT_PUBLIC_TRELLO_KEY = process.env.NEXT_PUBLIC_TRELLO_KEY
+const NEXT_PUBLIC_TRELLO_TOKEN = process.env.NEXT_PUBLIC_TRELLO_TOKEN
 
 export async function getStaticPaths() {
     // https://nextjs.org/learn/basics/dynamic-routes/implement-getstaticpaths
@@ -61,10 +64,10 @@ export async function getStaticProps({ params }) {
 
 export default function Project({ board, boardLists, cardListsArr }) {
 
-    useEffect(() => {
-        // alert("PING")
-        // console.log("asdasds", mockData, projData, test, json)
-    }, [])
+    const [boardData, setBoardData] = useState(board);
+    const [boardListsData, setBoardListsData] = useState(boardLists);
+    const [cardListsArrData, setCardListsArrData] = useState(cardListsArr);
+
 
     return (
         <Layout>
@@ -81,7 +84,11 @@ export default function Project({ board, boardLists, cardListsArr }) {
                     <Row>
                         {
                             boardLists.map((listData, index) => (
-                                    <StatusCard key={listData.id} listData={listData} listCards={cardListsArr[index]} />
+                                    <StatusCard 
+                                        key={listData.id} 
+                                        listData={listData} 
+                                        listCards={cardListsArr[index]} 
+                                    />
                             ))
                         }
                     </Row>

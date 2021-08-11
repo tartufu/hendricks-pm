@@ -14,41 +14,41 @@ import TextField from '@material-ui/core/TextField';
 import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 
+const NEXT_PUBLIC_TRELLO_KEY = process.env.NEXT_PUBLIC_TRELLO_KEY
+const NEXT_PUBLIC_TRELLO_TOKEN = process.env.NEXT_PUBLIC_TRELLO_TOKEN
 
 
-
-export default function AddCardModal({ modalToggle, modalToggleHandler, listId }) {
-
-    const REACT_APP_TRELLO_KEY = process.env.REACT_APP_TRELLO_KEY
-    const REACT_APP_TRELLO_TOKEN = process.env.REACT_APP_TRELLO_TOKEN
-
-    // TRELLO_KEY=ebee9c2d87f0d634524fe2162b73ced3
-    // TRELLO_TOKEN=6056672afc308314a457b271fd2080311aabd4e8f27611e1648b52e65d2e17ea
+export default function AddCardModal({ modalToggle, modalToggleHandler, listId, updateListCardsHandler }) {
 
     const [newCardDetail, setNewCardDetail] = useState("");
     const [errorToggle, setErrorToggle] = useState(false);
+    // const [newCardDetailRes, setNewCardDetailRes] = useState({})
 
-    const submitNewCardHandler = () => {
+    const submitNewCardHandler = async () => {
+
+        let newCardDetailRes = "";
         if (newCardDetail === "") {
             setErrorToggle(true);
             return null
         }
-        // alert("Ping " + listId + " " + newCardDetail);
         console.log("ADAWDAD", newCardDetail);
         modalToggleHandler()
         setErrorToggle(false)
 
-        // https://api.trello.com/1/cards?key=myKey&token=myToken&name=newCardName&desc=newCarddescription&idList=myListId
-        alert(REACT_APP_TRELLO_KEY)
-
-        fetch(`https://api.trello.com/1/cards?key=${REACT_APP_TRELLO_KEY}&token=${REACT_APP_TRELLO_TOKEN}&idList=${listId}&name=${newCardDetail}`, {
+        const response = await fetch(`https://api.trello.com/1/cards?key=${NEXT_PUBLIC_TRELLO_KEY}&token=${NEXT_PUBLIC_TRELLO_TOKEN}&idList=${listId}&name=${newCardDetail}`, {
             method: 'POST'
         }).then(res => {
             console.log(
                 `Response: ${res.status} ${res.statusText}`
               );
-              return res.text();
-        }).then(text => console.log(text)).catch(err => console.log(err))
+              return res.json();
+        }).then(text => {
+            newCardDetailRes = text;
+        }).catch(err => console.log(err))
+
+        console.log(">>>", newCardDetailRes)
+        updateListCardsHandler(newCardDetailRes)
+
     }
 
     return (
