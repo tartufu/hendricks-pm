@@ -24,8 +24,7 @@ export default function SingleCard({ card, boardListsData, listIndex, updateList
 
         let updatedCardRes = ""
 
-
-        const response = await fetch(`https://api.trello.com/1/cards/${card.id}?key=${NEXT_PUBLIC_TRELLO_KEY}&token=${NEXT_PUBLIC_TRELLO_TOKEN}&idList=${newListId}`, {
+        const response = await fetch(`https://api.trello.com/1/cards/${card.id}?key=${NEXT_PUBLIC_TRELLO_KEY}&token=${NEXT_PUBLIC_TRELLO_TOKEN}&idList=${newListId}&pos=bottom`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json'
@@ -41,8 +40,6 @@ export default function SingleCard({ card, boardListsData, listIndex, updateList
                 updatedCardRes = text
             })
             .catch(err => console.error(err));
-
-        // console.log("????", updatedCardRes);
 
         updateListsHandler(updatedCardRes, listIndex, (listIndex + 1))
 
@@ -69,17 +66,16 @@ export default function SingleCard({ card, boardListsData, listIndex, updateList
                 >
                     <DialogTitle id="alert-dialog-slide-title">{"Update Card Status"}</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            {card.name}
-                            <hr></hr>
-                            {card.desc}
-                        </DialogContentText>
+                        <p>{card.name}</p>
+                        <hr></hr>
+                        <p>{card.desc}</p>
                     </DialogContent>
                     <DialogActions>
                         {
                             (listIndex + 1) !== boardListsData.length &&
                             <Button onClick={updateCardHandler} color="primary">
-                                Update Status
+                                <span> Update Status :<strong>{boardListsData[listIndex + 1].name}</strong></span>
+                                
                             </Button>
                         }
 
