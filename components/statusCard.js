@@ -27,6 +27,10 @@ export default function StatusCard({ listData, listCards, boardListsData, listIn
         setCardsData(newListCardsArr)
     }
 
+    useEffect(() => {
+        setCardsData(listCards)
+    }, [listCards])
+
 
     return (
         <Col md={3}>

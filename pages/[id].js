@@ -68,6 +68,20 @@ export default function Project({ board, boardLists, cardListsArr }) {
     const [boardListsData, setBoardListsData] = useState(boardLists);
     const [cardListsArrData, setCardListsArrData] = useState(cardListsArr);
 
+    const updateListsHandler = (res, currentListIndex, newListIndex) => {
+        console.log("HEYYYYY", res, currentListIndex, newListIndex)
+
+        let newCardListsArr = [...cardListsArrData];
+
+        let newCardListsCurrentIndexArr = newCardListsArr[currentListIndex].filter(x => x.id !== res.id);
+        newCardListsArr[currentListIndex] = newCardListsCurrentIndexArr
+        newCardListsArr[newListIndex].push(res);
+
+        setCardListsArrData(newCardListsArr)
+    }
+
+
+
 
     return (
         <Layout>
@@ -90,6 +104,7 @@ export default function Project({ board, boardLists, cardListsArr }) {
                                         listCards={cardListsArrData[index]} 
                                         boardListsData={boardListsData}
                                         listIndex={index}
+                                        updateListsHandler={updateListsHandler}
                                     />
                             ))
                         }

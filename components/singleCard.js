@@ -10,8 +10,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-
-
 const NEXT_PUBLIC_TRELLO_KEY = process.env.NEXT_PUBLIC_TRELLO_KEY
 const NEXT_PUBLIC_TRELLO_TOKEN = process.env.NEXT_PUBLIC_TRELLO_TOKEN
 
@@ -24,7 +22,8 @@ export default function SingleCard({ card, boardListsData, listIndex, updateList
 
         const newListId = boardListsData[listIndex + 1].id
 
-        updateListsHandler()
+        let updatedCardRes = ""
+
 
         const response = await fetch(`https://api.trello.com/1/cards/${card.id}?key=${NEXT_PUBLIC_TRELLO_KEY}&token=${NEXT_PUBLIC_TRELLO_TOKEN}&idList=${newListId}`, {
             method: 'PUT',
@@ -36,10 +35,17 @@ export default function SingleCard({ card, boardListsData, listIndex, updateList
                 console.log(
                     `Response: ${response.status} ${response.statusText}`
                 );
-                return response.text();
+                return response.json();
             })
-            .then(text => console.log(text))
+            .then(text => {
+                updatedCardRes = text
+            })
             .catch(err => console.error(err));
+
+        // console.log("????", updatedCardRes);
+
+        updateListsHandler(updatedCardRes, listIndex, (listIndex + 1))
+
     }
 
     return (
