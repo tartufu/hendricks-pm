@@ -19,6 +19,7 @@ const NEXT_PUBLIC_TRELLO_TOKEN = process.env.NEXT_PUBLIC_TRELLO_TOKEN
 export default function AddCardModal({ modalToggle, modalToggleHandler, listId, updateListCardsHandler }) {
 
     const [newCardDetail, setNewCardDetail] = useState("");
+    const [newCardDesc, setNewCardDesc] = useState("")
     const [errorToggle, setErrorToggle] = useState(false);
     // const [newCardDetailRes, setNewCardDetailRes] = useState({})
 
@@ -33,7 +34,7 @@ export default function AddCardModal({ modalToggle, modalToggleHandler, listId, 
         modalToggleHandler()
         setErrorToggle(false)
 
-        const response = await fetch(`https://api.trello.com/1/cards?key=${NEXT_PUBLIC_TRELLO_KEY}&token=${NEXT_PUBLIC_TRELLO_TOKEN}&idList=${listId}&name=${newCardDetail}`, {
+        const response = await fetch(`https://api.trello.com/1/cards?key=${NEXT_PUBLIC_TRELLO_KEY}&token=${NEXT_PUBLIC_TRELLO_TOKEN}&idList=${listId}&name=${newCardDetail}&desc=${newCardDesc}`, {
             method: 'POST'
         }).then(res => {
             console.log(
@@ -70,6 +71,14 @@ export default function AddCardModal({ modalToggle, modalToggleHandler, listId, 
                     value={newCardDetail}
                     error={errorToggle}
                     helperText={errorToggle ? "Card Details cannot be blank" : ""}
+                />
+
+                <TextField
+                    label="Card Description"
+                    placeholder="FooBar"
+                    fullWidth
+                    onChange={(e) => setNewCardDesc(e.target.value)}
+                    value={newCardDesc}
                 />
             </DialogContent>
             <DialogActions>

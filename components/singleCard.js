@@ -45,9 +45,11 @@ export default function SingleCard({ card }) {
                 >
                     <DialogTitle id="alert-dialog-slide-title">{"Update Card Status"}</DialogTitle>
                     <DialogContent>
-                        {card.name}
-                        <hr></hr>
-                        {card.desc}
+                        <DialogContentText>
+                            {card.name}
+                            <hr></hr>
+                            {card.desc}
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={updateCardHandler} color="primary">
