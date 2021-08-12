@@ -34,28 +34,21 @@ export default function AddCardModal({ modalToggle, modalToggleHandler, listId, 
         modalToggleHandler()
         setErrorToggle(false)
 
-        const response = await fetch(`https://api.trello.com/1/cards?key=${NEXT_PUBLIC_TRELLO_KEY}&token=${NEXT_PUBLIC_TRELLO_TOKEN}&idList=${listId}&name=${newCardDetail}&desc=${newCardDesc}`, {
-            method: 'POST'
-        }).then(res => {
-            console.log(
-                `Response: ${res.status} ${res.statusText}`
-              );
-              return res.json();
-        }).then(text => {
-            newCardDetailRes = text;
+        const addCardApiCall = await fetch(`/api/addCard`, {
+            method: 'POST',
+            body: JSON.stringify({
+                newCardDetail,
+                newCardDesc,
+                listId
+              })
+        }).then( res => {
+            return res.json()
+        }).then( data => {
+            newCardDetailRes = data;
         }).catch(err => console.log(err))
-
-        // console.log(">>>", newCardDetailRes)
+        
         updateListCardsHandler(newCardDetailRes)
 
-        // const test = await fetch("/api/cards", {
-        //     method: 'POST',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //       },
-        //     body: JSON.stringify(newCardDetailRes)
-        // });
 
     }
 

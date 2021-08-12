@@ -26,7 +26,6 @@ export default function StatusCard({ listData, listCards, boardListsData, listIn
         newListCardsArr.push(res);
         setCardsData(newListCardsArr)
 
-        debugger
     }
 
     useEffect(() => {
