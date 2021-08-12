@@ -42,9 +42,18 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
 
-    // console.log(params.id)
-    const board = await (await fetch(`https://api.trello.com/1/boards/${params.id}/?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)).json()
-    const boardLists = await (await fetch(`https://api.trello.com/1/boards/${params.id}/lists?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)).json()
+    const board = await fetch(`${NEXT_PUBLIC_DEV_URL}/api/getBoard`, {
+        method: 'POST',
+        body: JSON.stringify({ id: params.id })
+    }).then( res => res.json()) 
+
+    const boardLists = await fetch(`${NEXT_PUBLIC_DEV_URL}/api/getBoardLists`, {
+        method: 'POST',
+        body: JSON.stringify({ id: params.id })
+    }).then ( res => res.json())
+
+
+    // const boardLists = await (await fetch(`https://api.trello.com/1/boards/${params.id}/lists?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)).json()
 
     let cardListsArr = [];
 
@@ -53,9 +62,9 @@ export async function getStaticProps({ params }) {
         cardListsArr.push(cardLists)
     }
 
-    // console.log(boardLists);
     return {
         props: {
+            // test,
             board,
             boardLists,
             cardListsArr
