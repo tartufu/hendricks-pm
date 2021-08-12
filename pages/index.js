@@ -59,7 +59,6 @@ export default function Home({ isConnected, json }) {
     newProjectArr.push(newBoardData);
     setAllProjData(newProjectArr);
 
-    debugger
   }
 
   return (

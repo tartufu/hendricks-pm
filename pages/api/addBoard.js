@@ -52,8 +52,8 @@ export default async (req, res) => {
         const createListMongoDb = await db.collection("lists").insertOne(listData)
     }
 
-    db.collection("lists").deleteMany()
-    db.collection("boards").deleteMany()
+    // db.collection("lists").deleteMany()
+    // db.collection("boards").deleteMany()
 
     res.json(createdBoardData)
     // return createdBoardData
