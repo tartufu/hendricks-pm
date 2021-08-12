@@ -11,8 +11,8 @@ import Col from 'react-bootstrap/Col'
 const TRELLO_KEY = process.env.TRELLO_KEY
 const TRELLO_TOKEN = process.env.TRELLO_TOKEN
 
-const NEXT_PUBLIC_TRELLO_KEY = process.env.NEXT_PUBLIC_TRELLO_KEY
-const NEXT_PUBLIC_TRELLO_TOKEN = process.env.NEXT_PUBLIC_TRELLO_TOKEN
+const NEXT_PUBLIC_DEV_URL = process.env.NEXT_PUBLIC_DEV_URL
+
 
 export async function getStaticPaths() {
     // https://nextjs.org/learn/basics/dynamic-routes/implement-getstaticpaths
@@ -22,7 +22,10 @@ export async function getStaticPaths() {
 
     // console.log("aasdasd", json)
 
-    const paths = json.map(data => {
+    const projectPaths = await fetch(`${NEXT_PUBLIC_DEV_URL}/api/getProjectPaths`)
+    const projectPathsJson = await projectPaths.json()
+
+    const paths = projectPathsJson.map(data => {
         return {
             params: {
                 id: data.id
