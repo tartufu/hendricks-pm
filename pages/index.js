@@ -7,11 +7,6 @@ import { useEffect, useState } from 'react'
 import { connectToDatabase } from '../lib/mongodb'
 import AddBoardModal from '../components/addBoardModal';
 
-
-const NEXT_PUBLIC_TRELLO_KEY = process.env.NEXT_PUBLIC_TRELLO_KEY
-const NEXT_PUBLIC_TRELLO_TOKEN = process.env.NEXT_PUBLIC_TRELLO_TOKEN
-
-// https://stackoverflow.com/questions/64739543/modulenotfounderror-module-not-found-error-cant-resolve-dns-in-node-modul
 export async function getServerSideProps(context) {
   const { client } = await connectToDatabase()
   const isConnected = await client.isConnected()

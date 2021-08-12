@@ -10,9 +10,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-const NEXT_PUBLIC_TRELLO_KEY = process.env.NEXT_PUBLIC_TRELLO_KEY
-const NEXT_PUBLIC_TRELLO_TOKEN = process.env.NEXT_PUBLIC_TRELLO_TOKEN
-
 export default function SingleCard({ card, boardListsData, listIndex, updateListsHandler }) {
 
     const [updateCardModalToggle, setUpdateCardModalToggle] = useState(false)
@@ -24,22 +21,20 @@ export default function SingleCard({ card, boardListsData, listIndex, updateList
 
         let updatedCardRes = ""
 
-        const response = await fetch(`https://api.trello.com/1/cards/${card.id}?key=${NEXT_PUBLIC_TRELLO_KEY}&token=${NEXT_PUBLIC_TRELLO_TOKEN}&idList=${newListId}&pos=bottom`, {
+        const updateCardRequest = await fetch('/api/updateCard', {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json'
-            }
-        })
-            .then(response => {
-                console.log(
-                    `Response: ${response.status} ${response.statusText}`
-                );
-                return response.json();
+            },
+            body: JSON.stringify({
+                cardId: card.id,
+                newListId: newListId
             })
-            .then(text => {
-                updatedCardRes = text
-            })
-            .catch(err => console.error(err));
+        }).then( res => {
+            return res.json()
+        }).then( data => {
+            updatedCardRes = data
+        }).catch(err => console.error(err))
 
         updateListsHandler(updatedCardRes, listIndex, (listIndex + 1))
 
@@ -74,7 +69,7 @@ export default function SingleCard({ card, boardListsData, listIndex, updateList
                         {
                             (listIndex + 1) !== boardListsData.length &&
                             <Button onClick={updateCardHandler} color="primary">
-                                <span> Update Status :<strong>{boardListsData[listIndex + 1].name}</strong></span>
+                                <span> Update Status: <strong>{boardListsData[listIndex + 1].name}</strong></span>
                                 
                             </Button>
                         }
