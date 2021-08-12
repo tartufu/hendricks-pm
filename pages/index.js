@@ -13,19 +13,23 @@ export async function getServerSideProps(context) {
 
   const TRELLO_KEY = process.env.TRELLO_KEY
   const TRELLO_TOKEN = process.env.TRELLO_TOKEN
+  const NEXT_PUBLIC_DEV_URL = process.env.NEXT_PUBLIC_DEV_URL
 
-  const response = await fetch(`https://api.trello.com/1/members/me/boards?fields=name,url&key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
-  const json = await response.json()
+  // const response = await fetch(`https://api.trello.com/1/members/me/boards?fields=name,url&key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
+  // const json = await response.json()
+
+  const allBoardsJson = await (await fetch(`${NEXT_PUBLIC_DEV_URL}/api/getAllBoards`)).json();
+  console.log(allBoardsJson)
 
   return {
-    props: { isConnected, json },
+    props: { isConnected, allBoardsJson },
   }
 }
 
 
-export default function Home({ isConnected, json }) {
+export default function Home({ isConnected, allBoardsJson }) {
 
-  const [allProjData, setAllProjData] = useState(json)
+  const [allProjData, setAllProjData] = useState(allBoardsJson)
   const [newBoardName, setNewBoardName] = useState("")
   const [addBoardModalToggle, setAddBoardModalToggle] = useState(false)
 
@@ -59,7 +63,7 @@ export default function Home({ isConnected, json }) {
   return (
     <Layout home>
       <Head>
-        <title> Hendricks Project Management </title>
+        <title> Hendricks Project Manager </title>
       </Head>
 
       {/* {isConnected ? (
