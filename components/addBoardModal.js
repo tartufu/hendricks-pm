@@ -30,6 +30,7 @@ export default function AddBoardModal({ newBoardName, setNewBoardName, addBoardH
         addBoardHandler()
         setErrorToggle(false)
         setAddBoardModalToggle(false)
+        setNewBoardName("")
     }
 
     return (

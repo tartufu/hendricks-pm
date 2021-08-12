@@ -30,7 +30,7 @@ export default function AddCardModal({ modalToggle, modalToggleHandler, listId, 
             setErrorToggle(true);
             return null
         }
-        console.log("ADAWDAD", newCardDetail);
+        // console.log("ADAWDAD", newCardDetail);
         modalToggleHandler()
         setErrorToggle(false)
 
@@ -48,14 +48,14 @@ export default function AddCardModal({ modalToggle, modalToggleHandler, listId, 
         // console.log(">>>", newCardDetailRes)
         updateListCardsHandler(newCardDetailRes)
 
-        const test = await fetch("/api/cards", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-            body: JSON.stringify(newCardDetailRes)
-        });
+        // const test = await fetch("/api/cards", {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //       },
+        //     body: JSON.stringify(newCardDetailRes)
+        // });
 
     }
 

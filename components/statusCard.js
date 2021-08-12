@@ -22,9 +22,11 @@ export default function StatusCard({ listData, listCards, boardListsData, listIn
 
     const updateListCardsHandler = (res) => {
 
-        let newListCardsArr = [...listCards];
+        let newListCardsArr = [...cardsData];
         newListCardsArr.push(res);
         setCardsData(newListCardsArr)
+
+        debugger
     }
 
     useEffect(() => {
