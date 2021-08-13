@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-
-// components
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import { useState, useEffect } from 'react'
 import styles from './statusCard.module.css'
+
 import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
+
 import AddCardModal from './addCardModal';
 import SingleCard from './singleCard';
 
@@ -13,6 +13,7 @@ import SingleCard from './singleCard';
 export default function StatusCard({ listData, listCards, boardListsData, listIndex, updateListsHandler }) {
 
     const [cardsData, setCardsData] = useState(listCards);
+
     const [modalToggle, setModalToggle] = useState(false)
 
     const modalToggleHandler = () => {
@@ -54,13 +55,5 @@ export default function StatusCard({ listData, listCards, boardListsData, listIn
             </div>
         </Col>
     )
-}
-
-StatusCard.propTypes = {
-    listData: PropTypes.object, 
-    listCards: PropTypes.array, 
-    boardListsData: PropTypes.array, 
-    listIndex: PropTypes.number, 
-    updateListsHandler: PropTypes.func
 }
 

@@ -1,21 +1,22 @@
 import Head from 'next/head'
+import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
+
 import { useEffect, useState } from 'react'
-import PropTypes from 'prop-types';
-
-// db
 import { connectToDatabase } from '../lib/mongodb'
-
-// components 
-import Layout, { siteTitle } from '../components/layout'
 import AddBoardModal from '../components/addBoardModal';
 
 export async function getServerSideProps(context) {
   const { client } = await connectToDatabase()
   const isConnected = await client.isConnected()
 
+  const TRELLO_KEY = process.env.TRELLO_KEY
+  const TRELLO_TOKEN = process.env.TRELLO_TOKEN
   const NEXT_PUBLIC_DEV_URL = process.env.NEXT_PUBLIC_DEV_URL
+
+  // const response = await fetch(`https://api.trello.com/1/members/me/boards?fields=name,url&key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
+  // const json = await response.json()
 
   const allBoardsJson = await (await fetch(`${NEXT_PUBLIC_DEV_URL}/api/getAllBoards`)).json();
   console.log(allBoardsJson)
@@ -50,7 +51,7 @@ export default function Home({ isConnected, allBoardsJson }) {
       );
       return response.json();
     }).then(data => {
-      // console.log("???", dat
+      console.log("???", data)
       newBoardData = data
     }).catch(err => console.log(err))
 
@@ -111,7 +112,3 @@ export default function Home({ isConnected, allBoardsJson }) {
   )
 }
 
-Home.propTypes = {
-  isConnected: PropTypes.bool,
-  allBoardsJson: PropTypes.array
-}

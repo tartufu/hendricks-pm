@@ -1,17 +1,16 @@
-import Head from 'next/head'
-import { useEffect, useState } from 'react'
-import PropTypes from 'prop-types';
-
-// components 
-import StatusCard from '../components/statusCard';
 import Layout from '../components/layout'
+import Head from 'next/head'
+
+import StatusCard from '../components/statusCard';
+import { useEffect, useState } from 'react'
+
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-//keys 
 const TRELLO_KEY = process.env.TRELLO_KEY
 const TRELLO_TOKEN = process.env.TRELLO_TOKEN
+
 const NEXT_PUBLIC_DEV_URL = process.env.NEXT_PUBLIC_DEV_URL
 
 
@@ -20,6 +19,8 @@ export async function getStaticPaths() {
 
     const response = await fetch(`https://api.trello.com/1/members/me/boards?fields=name,url&key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
     const json = await response.json()
+
+    // console.log("aasdasd", json)
 
     const projectPaths = await fetch(`${NEXT_PUBLIC_DEV_URL}/api/getProjectPaths`)
     const projectPathsJson = await projectPaths.json()
@@ -32,7 +33,7 @@ export async function getStaticPaths() {
         }
     })
 
-    // console.log(paths)
+    console.log(paths)
     return {
         paths,
         fallback: false
@@ -126,10 +127,4 @@ export default function Project({ board, boardLists, cardListsArr }) {
 
         </Layout>
     )
-}
-
-Project.propTypes = {
-    board: PropTypes.object,
-    boardLists: PropTypes.array,
-    cardListsArr: PropTypes.array
 }

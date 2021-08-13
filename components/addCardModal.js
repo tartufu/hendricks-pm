@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types'
+import styles from './AddCardModal.module.css'
 
-// components imports 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
 import TextField from '@material-ui/core/TextField';
+
+
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
+
+const NEXT_PUBLIC_TRELLO_KEY = process.env.NEXT_PUBLIC_TRELLO_KEY
+const NEXT_PUBLIC_TRELLO_TOKEN = process.env.NEXT_PUBLIC_TRELLO_TOKEN
 
 
 export default function AddCardModal({ modalToggle, modalToggleHandler, listId, updateListCardsHandler }) {
@@ -15,6 +21,7 @@ export default function AddCardModal({ modalToggle, modalToggleHandler, listId, 
     const [newCardDetail, setNewCardDetail] = useState("");
     const [newCardDesc, setNewCardDesc] = useState("")
     const [errorToggle, setErrorToggle] = useState(false);
+    // const [newCardDetailRes, setNewCardDetailRes] = useState({})
 
     const submitNewCardHandler = async () => {
 
@@ -23,6 +30,7 @@ export default function AddCardModal({ modalToggle, modalToggleHandler, listId, 
             setErrorToggle(true);
             return null
         }
+        // console.log("ADAWDAD", newCardDetail);
         modalToggleHandler()
         setErrorToggle(false)
 
@@ -82,11 +90,4 @@ export default function AddCardModal({ modalToggle, modalToggleHandler, listId, 
             </DialogActions>
         </Dialog>
     )
-}
-
-AddCardModal.propTypes = {
-    modalToggle: PropTypes.bool, 
-    modalToggleHandler: PropTypes.func, 
-    listId: PropTypes.string, 
-    updateListCardsHandler: PropTypes.func
 }

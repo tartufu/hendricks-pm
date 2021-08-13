@@ -31,6 +31,9 @@ export default async (req, res) => {
 
     const updateCardListMongoDb = await db.collection("cards").updateOne({ id: cardId }, { $set: { idList: newListId } })
 
+
+    // const createCardMongoDb = await db.collection("cards").insertOne(createdCardData)
+
     res.json(updatedCardListData)
 
 };
