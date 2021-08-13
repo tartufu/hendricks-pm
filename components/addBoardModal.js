@@ -1,25 +1,21 @@
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 import styles from './AddCardModal.module.css'
 
+// components 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
 import TextField from '@material-ui/core/TextField';
-
-
-import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
-
-const NEXT_PUBLIC_TRELLO_KEY = process.env.NEXT_PUBLIC_TRELLO_KEY
-const NEXT_PUBLIC_TRELLO_TOKEN = process.env.NEXT_PUBLIC_TRELLO_TOKEN
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 
 export default function AddBoardModal({ newBoardName, setNewBoardName, addBoardHandler, addBoardModalToggle, setAddBoardModalToggle }) {
 
     const [errorToggle, setErrorToggle] = useState(false);
-    // const [newCardDetailRes, setNewCardDetailRes] = useState({})
 
     const submitNewBoardHandler = () => {
         if (newBoardName === "") {
@@ -64,4 +60,12 @@ export default function AddBoardModal({ newBoardName, setNewBoardName, addBoardH
             </DialogActions>
         </Dialog>
     )
+}
+
+AddBoardModal.propTypes = {
+    newBoardName: PropTypes.string,
+    setNewBoardName: PropTypes.func,
+    addBoardHandler: PropTypes.func,
+    addBoardModalToggle: PropTypes.bool,
+    setAddBoardModalToggle: propTypes.func
 }

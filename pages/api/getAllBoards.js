@@ -13,6 +13,7 @@ export default async (req, res) => {
     
     if (getAllBoardsMongoDbCount !== getAllBoardsTrello.length) {
         // brute force, need to refine 
+        // when delete board need to lists and cards too
         db.collection("boards").deleteMany()
         db.collection("boards").insertMany(getAllBoardsTrello)
         getAllBoardsMongoDb = getAllBoardsTrello
