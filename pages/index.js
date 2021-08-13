@@ -74,6 +74,8 @@ export default function Home({ isConnected, allBoardsJson }) {
         </h2>
       )} */}
 
+
+
       <h2 onClick={() => setAddBoardModalToggle(!addBoardModalToggle)} style={{ color: 'blue', cursor: 'pointer' }}> Add Board </h2>
 
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
